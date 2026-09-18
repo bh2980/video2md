@@ -1,0 +1,46 @@
+[project]
+name = "video2md"
+version = "0.1.0"
+description = "Local lecture video → Markdown (captions/STT + OCR). No LLM."
+readme = "README.md"
+requires-python = ">=3.14"
+license = "MIT"
+authors = [{ name = "bh2980" }]
+keywords = ["video", "markdown", "whisper", "ocr", "lecture"]
+classifiers = [
+  "Private :: Do Not Upload",
+  "Operating System :: MacOS",
+  "Programming Language :: Python :: 3.14",
+  "Environment :: MacOS X",
+]
+
+dependencies = [
+  "webvtt-py>=0.5.1",
+  "mlx-whisper>=0.4.3",
+  "ImageHash>=4.3.2",
+  "ocrmac>=1.0.1",
+  "pillow>=12.3.0",
+]
+
+[project.scripts]
+video2md = "video2md.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+  "pytest>=8.3,<10",
+  "pytest-cov>=6.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = [
+  "integration: needs ffmpeg and writes a tiny mp4 (opt-in)",
+]
+
+[tool.uv]
+environments = ["sys_platform == 'darwin' and platform_machine == 'arm64'"]
